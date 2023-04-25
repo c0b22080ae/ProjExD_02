@@ -30,6 +30,8 @@ def main():
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
+    kk_img_end = pg.image.load("ex02/fig/6.png")
+    kk_img_end = pg.transform.rotozoom(kk_img_end, 0, 2.0)
     bb_img = pg.Surface((20, 20))
     pg.draw.circle(bb_img, (255, 0, 0), (10, 10), 10)
     bb_img.set_colorkey((0, 0, 0)) #爆弾の四偶を透明にした
@@ -53,7 +55,6 @@ def main():
             if key_lst[k]:
                 kk_rct.move_ip(mv)
         screen.blit(bg_img, [0, 0])
-        screen.blit(kk_img, kk_rct)
         bb_rct.move_ip(vx, vy)
         screen.blit(bb_img, bb_rct)
         yoko, tate = check_bound(screen.get_rect(), bb_rct)
@@ -62,6 +63,13 @@ def main():
         if not tate:
             vy *= -1
         
+
+
+        if kk_rct.colliderect(bb_rct):  #＝＝は書かない
+            screen.blit(kk_img_end, kk_rct)
+
+        else:
+            screen.blit(kk_img, kk_rct)
 
         pg.display.update()
         clock.tick(1000)
